@@ -1,33 +1,20 @@
-import React, { useEffect, useState } from 'react';
+// List.js
+import React from 'react';
 
-const List = ({ title, fetchData }) => {
-  const [items, setItems] = useState([]);
-
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const data = await fetchData();
-        setItems(data);
-      } catch (error) {
-        console.error(`Error fetching data for ${title}:`, error);
-      }
-    };
-
-    getData();
-  }, [fetchData, title]);
-
-  return (
-    <div className="list">
-      <h2>{title}</h2>
-      <ul>
-        {items.length > 0 ? (
-          items.map((item, index) => <li key={index}>{item}</li>)
-        ) : (
-          <li>No items available</li>
-        )}
-      </ul>
-    </div>
-  );
+const List = ({ title, data }) => {
+    return (
+        <div style={{ marginBottom: '20px' }}>
+            <h2>{title}</h2>
+            <ul>
+                {data.map((submission, index) => (
+                    <li key={index}>
+                        <strong>{submission.title}</strong>
+                         {/* - {submission.statusDisplay} */}
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
 };
 
 export default List;
