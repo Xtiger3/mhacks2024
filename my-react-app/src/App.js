@@ -7,7 +7,8 @@ function App() {
   const fetchRecentSubmissions = async () => {
     const response = await fetch('https://leetcode-api-faisalshohag.vercel.app/xtiger3');
     const data = await response.json();
-    return data.recentSubmissions.slice(0,3).map((submission) => submission.title);
+    const uniqueTitles = new Set(data.recentSubmissions.map((submission) => submission.title));
+    return Array.from(uniqueTitles).slice(0, 3);
   };  
 
   // // Function to fetch "up next" items (mocked for example purposes)
