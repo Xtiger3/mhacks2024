@@ -8,8 +8,9 @@ const List = ({ title, data }) => {
             <ul>
                 {data.map((submission, index) => (
                     <li key={index}>
-                        <strong>{submission.title}</strong>
-                         {/* - {submission.statusDisplay} */}
+                        <strong>{submission}</strong>
+                        {/* If you have a statusDisplay, uncomment the line below */}
+                        {/* - {submission.statusDisplay} */}
                     </li>
                 ))}
             </ul>
