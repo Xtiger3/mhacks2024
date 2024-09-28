@@ -1,0 +1,27 @@
+.recent-submissions {
+  text-align: left;
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 400px;
+  margin: 20px auto;
+}
+
+.recent-submissions h2 {
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.recent-submissions ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.recent-submissions li {
+  padding: 8px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.recent-submissions li:last-child {
+  border-bottom: none;
+}
