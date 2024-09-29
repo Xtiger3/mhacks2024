@@ -26,7 +26,6 @@ const HorizontalProgressBar = ({ progress, total, difficulty }) => {
                         backgroundColor: backgroundColor,
                         height: '100%',
                         transition: 'width 0.8s ease-in-out',
-                        borderRadius: '5px', // Make the progress bar's inner part rounded on both sides
                     }}
                 />
             </div>

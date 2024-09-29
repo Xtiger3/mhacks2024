@@ -13,8 +13,9 @@ const UsernameInput = () => {
     };
 
     return (
-        <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-            <h1>Enter your LeetCode Username</h1>
+        <div className="login-container" style={{ backgroundColor: "#1C254E" }}>
+            <h1>LeetRizz</h1>
+            <p className="login-prompt">Enter your LeetCode username</p>
             <form onSubmit={handleSubmit}>
                 <input
                     type="text"
@@ -23,9 +24,9 @@ const UsernameInput = () => {
                     placeholder="LeetCode Username"
                     required
                 />
-                <button type="submit">Submit</button>
             </form>
         </div>
+        
     );
 };
 
