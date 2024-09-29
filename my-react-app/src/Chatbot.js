@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 
-const Chatbot = ({ solvedEasyProblems, solvedMedProblems, solvedHardProblems, numDaysLast }) => {
+const Chatbot = ({ solvedEasyProblems, solvedMedProblems, solvedHardProblems, numDaysLast, recentStatus, recentDifficulty }) => {
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
     const username = localStorage.getItem('leetcodeUsername');
@@ -29,6 +29,8 @@ const Chatbot = ({ solvedEasyProblems, solvedMedProblems, solvedHardProblems, nu
                 leetcodeStats: leetcodeStats,
                 username: username,
                 numDaysLast: numDaysLast,
+                recentStatus: recentStatus,
+                recentDifficulty: recentDifficulty
             });
             const botReply = response.data.response;
 
@@ -56,7 +58,17 @@ const Chatbot = ({ solvedEasyProblems, solvedMedProblems, solvedHardProblems, nu
         <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
             <div style={{ display: 'flex', justifyItems: 'right', width: '100%' }}>
                 <div style={{ flex: '5' }}>
-                    <img src='/pleased-faang.GIF' style={{width:'100%'}}/>
+                    {numDaysLast > 10 ? (
+                        <p></p>
+                    ) : numDaysLast > 3 ? (
+                        <img src='/unpleased-faang.GIF' style={{width:'100%'}}/>
+                    ) : recentDifficulty === 'Hard'&& recentStatus === 'Accepted' ? (
+                        <img src='/impressed-faang.GIF' style={{width:'100%'}}/>
+                    ) : recentStatus === 'Accepted' ? (
+                        <img src='/pleased-faang.GIF' style={{width:'100%'}}/>
+                    ) : (
+                        <img src='/unpleased-faang.GIF' style={{width:'100%'}}/>
+                    )}
                 </div>
                 <div
                     style={{

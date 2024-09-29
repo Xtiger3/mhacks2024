@@ -9,6 +9,8 @@ import Papa from 'papaparse';
 
     const Home = () => {
         const [recentSubmissions, setRecentSubmissions] = useState([]);
+        const [recentStatus, setRecentStatus] = useState("");
+        const [recentDifficulty, setRecentDifficulty] = useState("");
         const [similarQuestions, setSimilarQuestions] = useState([]);
         const [upNext, setUpNext] = useState([]);
         const [solvedProblems, setSolvedProblems] = useState(0);
@@ -34,10 +36,10 @@ import Papa from 'papaparse';
                 try {
                     const response = await fetch('https://leetcode-api-faisalshohag.vercel.app/' + username);
                     const data = await response.json();
-                    console.log(data.recentSubmissions.slice(0, 3));
                     const uniqueTitles = new Set(data.recentSubmissions.map((submission) => submission.title));
                     const submissionTitles = Array.from(uniqueTitles).slice(0, 3);
                     setRecentSubmissions(submissionTitles);
+                    setRecentStatus(data.recentSubmissions[0].statusDisplay);
                     setSolvedProblems(data.totalSolved);
                     setTotalProblems(data.totalQuestions);
                     setSolvedEasyProblems(data.easySolved);
@@ -46,31 +48,32 @@ import Papa from 'papaparse';
                     setTotalEasy(data.totalEasy);
                     setTotalMed(data.totalMedium);
                     setTotalHard(data.totalHard);
-
-                const similarQuestionsSet = new Set();
-                Papa.parse('/problems.csv', {
-                    download: true,
-                    header: true,
-                    complete: (results) => {
-                        results.data.forEach((row) => {
-                            if (row.title !== undefined) {
-                                let title = (row.title).split('. ')[1]
-                                if (submissionTitles.includes(title)) {
-                                    // const parsedArray = JSON.parse(row.similar_questions.replace(/""/g, '"')); // Replaces the double quotes with single ones
-                                    const trimmedString = row.similar_questions.replace(/[\[\]'"]/g, '');
-                                    const questions = trimmedString.split(',');
-                                    questions.forEach((question) => {
-                                    similarQuestionsSet.add(question.trim());
-                                    });
+                
+                    // get similar questions
+                    const similarQuestionsSet = new Set();
+                    Papa.parse('/problems.csv', {
+                        download: true,
+                        header: true,
+                        complete: (results) => {
+                            results.data.forEach((row) => {
+                                if (row.title !== undefined) {
+                                    let title = (row.title).split('. ')[1]
+                                    if (submissionTitles.includes(title)) {
+                                        const trimmedString = row.similar_questions.replace(/[\[\]'"]/g, '');
+                                        const questions = trimmedString.split(',');
+                                        questions.forEach((question) => {
+                                            similarQuestionsSet.add(question.trim());
+                                        });
+                                    }
+                                    if (title === submissionTitles[0]) {
+                                        setRecentDifficulty(row.difficulty)
+                                    }
                                 }
-                            }
-                                    
-                        });
-            
-                        // Get the top 3 unique similar questions and resolve the promise
-                        setSimilarQuestions(Array.from(similarQuestionsSet).slice(0, 3));
-                    },
-                });
+                            });
+                            // Get the top 3 unique similar questions and resolve the promise
+                            setSimilarQuestions(Array.from(similarQuestionsSet).slice(0, 3));
+                        },
+                    });
                     if (data.recentSubmissions.length > 0) {
                         setNumDaysSinceLast(daysAgo(data.recentSubmissions[0].timestamp));
                     }
@@ -107,6 +110,8 @@ import Papa from 'papaparse';
                             solvedMedProblems={solvedMedProblems}
                             solvedHardProblems={solvedHardProblems}
                             numDaysLast={numDaysSinceLast}
+                            recentStatus={recentStatus}
+                            recentDifficulty={recentDifficulty}
                         />
                     </div>
                 </div>
