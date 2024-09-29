@@ -1,0 +1,15 @@
+* {
+    font-family: "Josefin Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600; /* Default weight, you can adjust as needed */
+    font-style: normal;
+  }
+
+
+h1, h2  {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+  color: #fff;
+}
